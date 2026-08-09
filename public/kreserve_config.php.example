@@ -1,0 +1,72 @@
+<?php
+/**
+ * kreserve の設定。このファイルを kreserve_config.php にコピーして編集してください。
+ * （.example のままでは読み込まれません）
+ *
+ * 【この製品の考え方】
+ * メニュー・営業時間・受付ルールは、管理画面ではなくこのファイルで決めます。
+ * 「カットの時間を変えたい」「定休日を増やしたい」は、このファイルを
+ * Claude Code などのAIエージェントに見せて頼めば、安全に書き換えてくれます
+ * （同梱の docs/ にAI向けの手引きがあります）。
+ */
+
+// ---- お店 ----
+define('KRES_SHOP_NAME', 'サンプルサロン Kurage');
+define('KRES_SHOP_TEL',  '03-0000-0000');          // 空文字にすると表示しません
+
+// ---- 受付ルール ----
+define('KRES_SLOT_MINUTES', 30);         // 予約枠の刻み(分)
+define('KRES_DAYS_AHEAD', 14);           // 何日先まで受け付けるか
+define('KRES_MIN_HOURS_BEFORE', 2);      // 開始の何時間前まで予約できるか
+define('KRES_CANCEL_HOURS_BEFORE', 24);  // 開始の何時間前までキャンセルできるか
+define('KRES_CAPACITY', 1);              // 同じ時間帯に受けられる数(施術者・窓口の数)
+
+// ---- メニュー ----
+// キーは半角英数(変えると過去の予約との対応が切れるので、運用開始後は変えない)。
+// minutes は所要時間。枠の刻み(KRES_SLOT_MINUTES)の倍数でなくても構いません。
+function kres_services() {
+    return array(
+        'cut'     => array('name' => 'カット',           'minutes' => 60,  'price' => 4400),
+        'color'   => array('name' => 'カット＋カラー',   'minutes' => 120, 'price' => 9900),
+        'shampoo' => array('name' => 'シャンプー＋ブロー', 'minutes' => 30,  'price' => 2200),
+    );
+}
+
+// ---- 営業時間 ----
+// 曜日ごとに array('開店', '閉店')。null はその曜日が定休日。
+// 0=日曜, 1=月曜, 2=火曜, 3=水曜, 4=木曜, 5=金曜, 6=土曜
+function kres_hours() {
+    return array(
+        0 => array('10:00', '17:00'),   // 日
+        1 => null,                      // 月(定休)
+        2 => array('10:00', '19:00'),   // 火
+        3 => array('10:00', '19:00'),   // 水
+        4 => array('10:00', '19:00'),   // 木
+        5 => array('10:00', '20:00'),   // 金
+        6 => array('09:00', '19:00'),   // 土
+    );
+}
+
+// ---- 臨時休業日(YYYY-MM-DD) ----
+function kres_closed_days() {
+    return array(
+        // '2026-08-13', '2026-08-14',
+    );
+}
+
+// ---- メール ----
+// レンタルサーバー標準の mail() で送ります(SMTP設定は不要)。
+define('KRES_MAIL_FROM', 'info@example.com');   // 差出人(実在するドメインのアドレスに)
+define('KRES_NOTIFY_TO', '');                    // 予約が入ったとき店に知らせる宛先(空なら通知しない)
+
+// ---- 管理画面 ----
+// パスワードは password_hash で作った文字列を入れます。
+// 作り方: php scripts/make_password_hash.php を実行して表示された文字列を貼る
+define('KRES_ADMIN_PASSWORD_HASH', '');
+
+// ---- 見た目 ----
+define('KRES_ACCENT_COLOR', '#2f6bd8');   // 予約ページのテーマ色
+
+// ---- デモモード ----
+// true にするとメールを送らず、デモである旨を画面に表示します。
+define('KRES_DEMO', false);
