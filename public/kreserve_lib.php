@@ -271,7 +271,12 @@ function kres_head($title) {
         . '<small>ご予約' . (KRES_SHOP_TEL !== '' ? '（お電話 ' . kres_h(KRES_SHOP_TEL) . '）' : '') . '</small></header>'
         . '<div class="wrap">';
     if (kres_is_demo()) {
-        echo '<p class="ok">これはデモ環境です。予約してもメールは送信されません。データは定期的に消去されます。</p>';
+        $on_admin = (basename($_SERVER['SCRIPT_NAME']) === 'kreserve_admin.php');
+        echo '<p class="ok">これはデモ環境です。予約してもメールは送信されません。データは定期的に消去されます。<br>'
+            . ($on_admin
+                ? '→ <a href="kreserve.php">お客様向けの予約ページを見る</a>'
+                : '→ <a href="kreserve_admin.php">お店側の管理画面デモを見る</a>（パスワード: demo）')
+            . '</p>';
     }
 }
 
