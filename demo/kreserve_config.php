@@ -62,7 +62,7 @@ define('KRES_NOTIFY_TO', '');                    // 予約が入ったとき店�
 // ---- 管理画面 ----
 // パスワードは password_hash で作った文字列を入れます。
 // 作り方: php scripts/make_password_hash.php を実行して表示された文字列を貼る
-define('KRES_ADMIN_PASSWORD_HASH', '$2y$10$1W6xf3xQHO4fEkN5\/4nD\/uI1Nk8oIT.65xTweFUxlsKwZoyPdJEk6');
+define('KRES_ADMIN_PASSWORD_HASH', '$2y$10$U7q0tZFEfndyoOpWAQkvO.kqBByYn4VHhg1HLVCvnDiaNqnTyO7Ye');
 
 // ---- 見た目 ----
 define('KRES_ACCENT_COLOR', '#2f6bd8');   // 予約ページのテーマ色
